@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Shop</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1 align="left">EverBloom</h1>
+        <a href="cart.html" id="cartBtn">Cart (0)</a> <!-- Cart button -->
+    </header>
+
+    <main id="product-list">
+        <div class="product">
+            <img src="https://www.juneflowers.com/wp-content/uploads/2022/09/red_rose_of_love.jpg" alt="Red Rose Bouquet">
+            <h3>Red Rose Bouquet</h3>
+            <p>A beautiful red rose for all occasions.</p>
+            <p>Price: $10</p>
+            <button onclick="addToCart(1, 'Red Rose Bouquet', 10, 'https://www.juneflowers.com/wp-content/uploads/2022/09/red_rose_of_love.jpg')">Add to Cart</button>
+        </div>
+
+        <div class="product">
+            <img src="https://m.media-amazon.com/images/I/51aFomSk7eL.jpg" alt="Tulip Bouquet">
+            <h3>Tulip Bouquet</h3>
+            <p>A vibrant bouquet of tulips for a cheerful occasion.</p>
+            <p>Price: $15</p>
+            <button onclick="addToCart(2, 'Tulip Bouquet', 15, 'https://m.media-amazon.com/images/I/51aFomSk7eL.jpg')">Add to Cart</button>
+        </div>
+
+        <div class="product">
+            <img src="https://freshknots.in/wp-content/uploads/2022/12/2-540x540.jpg" alt="Sunflower">
+            <h3>Sunflower</h3>
+            <p>A bright sunflower for a sunny disposition.</p>
+            <p>Price: $12</p>
+            <button onclick="addToCart(3, 'Sunflower', 12, 'https://freshknots.in/wp-content/uploads/2022/12/2-540x540.jpg')">Add to Cart</button>
+        </div>
+        
+        <div class="product">
+            <img src="https://m.media-amazon.com/images/I/81c31B0GLoS._AC_UF894,1000_QL80_.jpg" alt="Glass Vase">
+            <h3>Vase - Glass</h3>
+            <p>A stylish glass vase perfect for any bouquet.</p>
+            <p>Price: $20</p>
+            <button onclick="addToCart(4, 'Vase - Glass', 20, 'https://m.media-amazon.com/images/I/81c31B0GLoS._AC_UF894,1000_QL80_.jpg')">Add to Cart</button>
+        </div>
+        
+        <div class="product">
+            <img src="https://s.alicdn.com/@sc04/kf/Ha43d33d21a4944618de3a2067dda36deS.jpg_720x720q50.jpg" alt="Gift Box">
+            <h3>Gift Box</h3>
+            <p>A beautiful gift box filled with assorted flowers.</p>
+            <p>Price: $25</p>
+            <button onclick="addToCart(5, 'Gift Box', 25, 'https://s.alicdn.com/@sc04/kf/Ha43d33d21a4944618de3a2067dda36deS.jpg_720x720q50.jpg')">Add to Cart</button>
+        </div>
+        
+        <div class="product">
+            <img src="https://s.alicdn.com/@sc04/kf/H2080985af4d041d0bc70c25d5c56f413a.jpg_720x720q50.jpg" alt="Custom Bouquet">
+            <h3>Custom Bouquet</h3>
+            <p>Create your own bouquet with a selection of flowers.</p>
+            <p>Price: $30</p>
+            <button onclick="addToCart(6, 'Custom Bouquet', 30, 'https://s.alicdn.com/@sc04/kf/H2080985af4d041d0bc70c25d5c56f413a.jpg_720x720q50.jpg')">Add to Cart</button>
+        </div>
+        
+        <div class="product">
+            <img src="https://www.farmerica.in/wp-content/uploads/2024/07/flower2.jpeg" alt="Orchid Bouquet">
+            <h3>Orchid Bouquet</h3>
+            <p>A beautiful orchid bouquet for a sophisticated touch.</p>
+            <p>Price: $35</p>
+            <button onclick="addToCart(7, 'Orchid Bouquet', 35, 'https://www.farmerica.in/wp-content/uploads/2024/07/flower2.jpeg')">Add to Cart</button>
+        </div>
+        
+        <div class="product">
+            <img src="https://www.flowers2indore.com/productimages/FLH1656-VA_big.jpg" alt="Lily Arrangement">
+            <h3>Lily Arrangement</h3>
+            <p>Elegant lilies arranged to perfection.</p>
+            <p>Price: $22</p>
+            <button onclick="addToCart(8, 'Lily Arrangement', 22, 'https://www.flowers2indore.com/productimages/FLH1656-VA_big.jpg')">Add to Cart</button>
+        </div>
+    </main>
+
+    <script>
+        // Load cart from localStorage
+        function loadCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            return cart;
+        }
+
+        // Save cart to localStorage
+        function saveCart(cart) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Add an item to the cart
+        function addToCart(id, name, price, image) {
+            let cart = loadCart();
+            // Check if the item already exists in the cart
+            const existingItemIndex = cart.findIndex(item => item.id === id);
+            if (existingItemIndex !== -1) {
+                // If item exists, increase quantity
+                cart[existingItemIndex].quantity += 1;
+            } else {
+                // If item doesn't exist, add new item to cart
+                cart.push({ id, name, price, image, quantity: 1 });
+            }
+            saveCart(cart);
+            updateCartDisplay();
+        }
+
+        // Update cart display on the header
+        function updateCartDisplay() {
+            const cart = loadCart();
+            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartBtn').textContent = `Cart (${cartCount})`;
+        }
+
+        // Initialize cart display on page load
+        window.onload = updateCartDisplay;
+    </script>
+</body>
+</html>
